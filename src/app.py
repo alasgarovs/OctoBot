@@ -2,35 +2,25 @@ import os
 import pandas as pd
 import numpy as np
 import sys
-import socket
 import webbrowser
 import time
 import urllib.parse
-import re
 from datetime import datetime
-from contextlib import contextmanager
 
-from openpyxl import Workbook
-from openpyxl.utils import get_column_letter
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QTextCharFormat, QColor, QTextCursor, QCursor
+from PyQt6.QtCore import QThread, pyqtSignal
+
 from db_connect import *
 from info import *
-
-from PyQt6.QtWidgets import QProgressDialog, QApplication, QMainWindow, QMessageBox, QFileDialog, QDialog, QTableWidgetItem, QCheckBox, QWidget, QHBoxLayout
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QTextCharFormat, QColor, QTextCursor
-from PyQt6.QtCore import QThread, pyqtSignal
-
 from ui_pycode.main import Ui_Main
-
-from PyQt6.QtCore import QThread, pyqtSignal
 
 class WhatsAppWorker(QThread):
     log_signal = pyqtSignal(str, list)
@@ -165,7 +155,7 @@ class Main(QMainWindow, Ui_Main):
         self.btn_accept.hide()
         self.btn_cancel.hide()
         self.label_active.hide()
-        self.btn_stop.setEnabled(False)
+        self.btn_stop.hide()
         self.fetch_message()
         self.fetch_temp_numbers_count()
         self.fetch_all_numbers_count()
@@ -256,8 +246,8 @@ class Main(QMainWindow, Ui_Main):
         
         self.label_active.show()
         self.label_inactive.hide()
-        self.btn_start.setEnabled(False)
-        self.btn_stop.setEnabled(True)
+        self.btn_start.hide()
+        self.btn_stop.show()
         
         self.log("Bot operation is starting...", self.activate)
         
@@ -282,14 +272,15 @@ class Main(QMainWindow, Ui_Main):
             if reply == QMessageBox.StandardButton.Yes:
                 self.worker.stop()
                 self.log("Stopping operation...", self.critical)
-                self.btn_stop.setEnabled(False)
+                self.btn_start.show()
+                self.btn_stop.hide()
 
 
     def on_operation_finished(self):
         self.label_active.hide()
         self.label_inactive.show()
-        self.btn_start.setEnabled(True)
-        self.btn_stop.setEnabled(False)
+        self.btn_start.show()
+        self.btn_stop.hide()
         self.fetch_temp_numbers_count()
         self.fetch_all_numbers_count()
 
