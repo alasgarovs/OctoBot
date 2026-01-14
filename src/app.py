@@ -26,8 +26,121 @@ from info import *
 from PyQt6.QtWidgets import QProgressDialog, QApplication, QMainWindow, QMessageBox, QFileDialog, QDialog, QTableWidgetItem, QCheckBox, QWidget, QHBoxLayout
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QTextCharFormat, QColor, QTextCursor
+from PyQt6.QtCore import QThread, pyqtSignal
 
 from ui_pycode.main import Ui_Main
+
+from PyQt6.QtCore import QThread, pyqtSignal
+
+class WhatsAppWorker(QThread):
+    log_signal = pyqtSignal(str, list)
+    update_temp_count = pyqtSignal()
+    update_all_count = pyqtSignal()
+    operation_finished = pyqtSignal()
+    
+    def __init__(self, message):
+        super().__init__()
+        self.message = message
+        self.is_running = True
+    
+    def stop(self):
+        self.is_running = False
+    
+    def run(self):
+        chrome_options = Options()
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
+
+        driver = webdriver.Chrome(options=chrome_options)
+        logged_in = False
+        
+        try:
+            with Session() as session:
+                temp_numbers = session.query(TempNumbers).all()
+            
+            if not temp_numbers:
+                self.log_signal.emit("Error: The DB is empty, import numbers to the database.", ['\uf057', "#FF0015"])
+                driver.quit()
+                self.operation_finished.emit()
+                return
+            
+            for num in temp_numbers:
+                if not self.is_running:
+                    break
+                    
+                with Session() as session:
+                    if not self.is_running:
+                        break
+                        
+                    existing = session.query(Pool).filter(Pool.number == num.number).first()
+                    temp = session.query(TempNumbers).filter(TempNumbers.number == num.number).first()
+                    
+                    if temp:
+                        session.delete(temp)
+                    
+                    if existing:
+                        self.log_signal.emit(f"This number has been used previously: +{num.number}.", ['\uf06a', "#FFBB00"])
+                        session.commit()
+                        continue
+                    
+                    if not self.is_running:
+                        break
+                    
+                    try:
+                        encoded_message = urllib.parse.quote(self.message)
+                        wa_link = f"https://web.whatsapp.com/send?phone=+{num.number}&text={encoded_message}"
+                        driver.get(wa_link)
+                        
+                        if not self.is_running:
+                            break
+                        
+                        if not logged_in:
+                            wait = WebDriverWait(driver, 30)
+                            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"]')))
+                            logged_in = True
+                        else:
+                            wait = WebDriverWait(driver, 15)
+                            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"]')))
+                        
+                        if not self.is_running:
+                            break
+                        
+                        time.sleep(2)
+                        error_message = driver.find_elements(By.XPATH, '//div[contains(text(), "Phone number shared via url is invalid.")]')
+                        
+                        if error_message:
+                            self.log_signal.emit(f'Phone number +{num.number} shared via url is invalid.', ['\uf057', "#FF0015"])
+                            continue
+                        
+                        if not self.is_running:
+                            break
+                        
+                        send_button = WebDriverWait(driver, 10).until(
+                            EC.element_to_be_clickable((By.XPATH, '//span[@data-icon="wds-ic-send-filled"]'))
+                        )
+                        send_button.click()
+                        time.sleep(3)
+                        
+                        self.log_signal.emit(f"Message to +{num.number} sent successfully.", ['\uf058', '#00d4ff'])
+                        session.add(Pool(number=num.number, whatsapp_status=True))
+                        
+                    except Exception as e:
+                        self.log_signal.emit(f"Failed to send message to +{num.number}: {e}.", ['\uf057', "#FF0015"])
+                    
+                    session.commit()
+                
+                self.update_temp_count.emit()
+                self.update_all_count.emit()
+            
+            if not self.is_running:
+                self.log_signal.emit("Operation stopped by user.", ['\uf06a', "#FFBB00"])
+            else:
+                self.log_signal.emit("Bot operation completed. All messages have been sent or attempted.", ['\uf05a', '#D8D9DB'])
+                
+        finally:
+            driver.quit()
+            self.operation_finished.emit()
 
 
 class Main(QMainWindow, Ui_Main):
@@ -44,12 +157,15 @@ class Main(QMainWindow, Ui_Main):
         
         self.setup_window()
         self.setup_buttons()
+        
+        self.worker = None
 
     def setup_window(self):
         self.setWindowTitle(self.title)
         self.btn_accept.hide()
         self.btn_cancel.hide()
         self.label_active.hide()
+        self.btn_stop.setEnabled(False)
         self.fetch_message()
         self.fetch_temp_numbers_count()
         self.fetch_all_numbers_count()
@@ -59,11 +175,10 @@ class Main(QMainWindow, Ui_Main):
     def setup_buttons(self):
         self.btn_import.clicked.connect(self.select_excel_file)
         self.btn_start.clicked.connect(self.start_operation)
-        self.btn_pause.clicked.connect(self.pause_operation)
         self.btn_stop.clicked.connect(self.stop_operation)
-        self.btn_edit.clicked.connect(lambda: self.message_action("edit"))
-        self.btn_accept.clicked.connect(lambda: self.message_action("accept"))
-        self.btn_cancel.clicked.connect(lambda: self.message_action("cancel"))
+        self.btn_edit.clicked.connect(lambda checked: self.message_action("edit"))
+        self.btn_accept.clicked.connect(lambda checked: self.message_action("accept"))
+        self.btn_cancel.clicked.connect(lambda checked: self.message_action("cancel"))
         self.btn_info.clicked.connect(self.about)
         self.btn_github.clicked.connect(self.github)
         self.btn_export.clicked.connect(self.export_db)
@@ -127,107 +242,61 @@ class Main(QMainWindow, Ui_Main):
 
     ############## OPERATIONS #################################
     ######################################################
+
     def start_operation(self):
+        if self.worker and self.worker.isRunning():
+            self.log("Operation is already running!", self.critical)
+            return
+        
+        message = self.Message.toPlainText().strip()
+        
+        if not message:
+            self.log("Please enter a message before starting.", self.error)
+            return
+        
         self.label_active.show()
         self.label_inactive.hide()
+        self.btn_start.setEnabled(False)
+        self.btn_stop.setEnabled(True)
         
-        self.log(f"Bot operation is starting...", self.activate)
-        message = self.Message.toPlainText().strip()
-
-        chrome_options = Options()
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
-
-        driver = webdriver.Chrome(options=chrome_options)
-
-        logged_in = False
-    
-        valid_numbers = []
-        invalid_numbers = []
-
-        with Session() as session:
-            temp_numbers = session.query(TempNumbers).all()
+        self.log("Bot operation is starting...", self.activate)
         
-        if temp_numbers:
-            for num in temp_numbers:
-                with Session() as session:
-                    existing = session.query(Pool).filter(Pool.number == num.number).first()
-
-                    temp = session.query(TempNumbers).filter(TempNumbers.number == num.number).first()
-                    if temp:
-                        session.delete(temp)
-
-                    if existing:
-                        self.log(f"This number has been used previously: +{num.number}.", self.critical)
-                        session.commit()
-                        continue
-
-                    try:
-
-                        encoded_message = urllib.parse.quote(message)
-                        wa_link = f"https://web.whatsapp.com/send?phone=+{num.number}&text={encoded_message}"
-                        driver.get(wa_link)
-                        
-                        if not logged_in:
-                            
-                            wait = WebDriverWait(driver, 30)
-                            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"]')))
-                            logged_in = True
-                        else:
-                            wait = WebDriverWait(driver, 15)
-                            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"]')))
-                        
-                        time.sleep(2)
-                        error_message = driver.find_elements(By.XPATH, '//div[contains(text(), "Phone number shared via url is invalid.")]')
-                        if error_message:
-                            self.log(f'Phone number +{num.number} shared via url is invalid.', self.error)
-                            invalid_numbers.append(num.number)
-                            continue
-                        
-                        valid_numbers.append(num.number)
-                        
-                        send_button = WebDriverWait(driver, 10).until(
-                            #EC.element_to_be_clickable((By.XPATH, '//span[@data-icon="send"]')) # for android
-                            EC.element_to_be_clickable((By.XPATH, '//span[@data-icon="wds-ic-send-filled"]'))
-                        )
-                        send_button.click()
-
-                        time.sleep(3)
-                        self.log(f"Message to +{num.number} sent successfully.", self.success)
-                        session.add(Pool(number=num.number, whatsapp_status=True))
-                    except Exception as e:
-                        self.log(f"Failed to send message to +{num.number}: {e}.", self.error)
-                        invalid_numbers.append(num)
-
-                    session.commit()
+        # Create and start worker thread
+        self.worker = WhatsAppWorker(message)
+        self.worker.log_signal.connect(self.log)
+        self.worker.update_temp_count.connect(self.fetch_temp_numbers_count)
+        self.worker.update_all_count.connect(self.fetch_all_numbers_count)
+        self.worker.operation_finished.connect(self.on_operation_finished)
+        self.worker.start()
 
 
-                self.fetch_temp_numbers_count()
-                self.fetch_all_numbers_count()
-
+    def stop_operation(self):
+        if self.worker and self.worker.isRunning():
+            reply = QMessageBox.question(
+                self,
+                "Stop Operation",
+                "Are you sure you want to stop the operation?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
             
-            self.log(f"Bot operation completed. All messages have been sent or attempted.", self.info)
-        else:
-            self.log(f"Error: The DB is empty, import numbers to the database.", self.error)
-       
-        driver.quit()
+            if reply == QMessageBox.StandardButton.Yes:
+                self.worker.stop()
+                self.log("Stopping operation...", self.critical)
+                self.btn_stop.setEnabled(False)
+
+
+    def on_operation_finished(self):
         self.label_active.hide()
         self.label_inactive.show()
+        self.btn_start.setEnabled(True)
+        self.btn_stop.setEnabled(False)
         self.fetch_temp_numbers_count()
         self.fetch_all_numbers_count()
-
 
     def log(self, text, log_type):
         timestamp = datetime.now().strftime("%H:%M:%S")
         self.Log.append(f'<font color="{log_type[1]}">{log_type[0]} {timestamp} - {text}</font><br>')
         QApplication.processEvents()
-
-    def pause_operation(self):
-        self.MessageBox('info' ,'Test')
-
-    def stop_operation(self):
-        self.MessageBox('info' ,'Test')
 
     def fetch_temp_numbers_count(self):
         with Session() as session:
