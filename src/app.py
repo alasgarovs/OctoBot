@@ -163,7 +163,7 @@ class Main(QMainWindow, Ui_Main):
         super().__init__()
         self.setupUi(self)
 
-        self.title = 'WhatsBot'
+        self.title = 'OctoBot'
         self.success = ['\uf058', '#00d4ff']
         self.activate = ['\uf058', "#00FF00"]
         self.error = ['\uf057', "#FF0015"]

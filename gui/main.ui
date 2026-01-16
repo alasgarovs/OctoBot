@@ -17,7 +17,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>OctoBot</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/octopus.png</normaloff>:/icons/octopus.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">#MainWindow{
@@ -48,6 +52,12 @@ QLabel{
 }
 
 </string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>28</width>
+    <height>28</height>
+   </size>
   </property>
   <widget class="QWidget" name="MainWindow">
    <layout class="QGridLayout" name="gridLayout">

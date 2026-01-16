@@ -14,6 +14,9 @@ class Ui_Main(object):
         Main.setObjectName("Main")
         Main.resize(800, 598)
         Main.setMaximumSize(QtCore.QSize(841, 598))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/octopus.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        Main.setWindowIcon(icon)
         Main.setStyleSheet("#MainWindow{\n"
 "    background-color:#000000;\n"
 "    color:white;\n"
@@ -42,6 +45,7 @@ class Ui_Main(object):
 "}\n"
 "\n"
 "")
+        Main.setIconSize(QtCore.QSize(28, 28))
         self.MainWindow = QtWidgets.QWidget(parent=Main)
         self.MainWindow.setObjectName("MainWindow")
         self.gridLayout = QtWidgets.QGridLayout(self.MainWindow)
@@ -93,9 +97,9 @@ class Ui_Main(object):
 "color:white;\n"
 "")
         self.btn_reset_log.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/broom.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_reset_log.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/broom.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_reset_log.setIcon(icon1)
         self.btn_reset_log.setIconSize(QtCore.QSize(30, 30))
         self.btn_reset_log.setCheckable(False)
         self.btn_reset_log.setAutoExclusive(False)
@@ -159,9 +163,9 @@ class Ui_Main(object):
         self.btn_import.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.btn_import.setStyleSheet("background-color: #00BA00;\n"
 "")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/import.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_import.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/import.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_import.setIcon(icon2)
         self.btn_import.setIconSize(QtCore.QSize(14, 14))
         self.btn_import.setCheckable(False)
         self.btn_import.setAutoExclusive(False)
@@ -177,9 +181,9 @@ class Ui_Main(object):
         self.btn_start.setStyleSheet("background-color: rgb(26, 109, 182);\n"
 "color:white;\n"
 "")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/start.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_start.setIcon(icon2)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/icons/start.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_start.setIcon(icon3)
         self.btn_start.setIconSize(QtCore.QSize(14, 14))
         self.btn_start.setCheckable(False)
         self.btn_start.setAutoExclusive(False)
@@ -195,9 +199,9 @@ class Ui_Main(object):
         self.btn_stop.setStyleSheet("background-color: #FF0000;\n"
 "color:white;\n"
 "")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/stop.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_stop.setIcon(icon3)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icons/stop.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_stop.setIcon(icon4)
         self.btn_stop.setIconSize(QtCore.QSize(14, 14))
         self.btn_stop.setCheckable(False)
         self.btn_stop.setAutoExclusive(False)
@@ -232,9 +236,9 @@ class Ui_Main(object):
         self.label_active.setStyleSheet("background-color:transparent;\n"
 "color:#00BA00;\n"
 "border:none;")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icons/active.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.label_active.setIcon(icon4)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icons/active.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.label_active.setIcon(icon5)
         self.label_active.setIconSize(QtCore.QSize(12, 12))
         self.label_active.setCheckable(False)
         self.label_active.setAutoExclusive(False)
@@ -248,9 +252,9 @@ class Ui_Main(object):
         self.label_inactive.setStyleSheet("background-color:transparent;\n"
 "color:#FF0000;\n"
 "border:none;")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/deactive.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.label_inactive.setIcon(icon5)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/icons/deactive.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.label_inactive.setIcon(icon6)
         self.label_inactive.setIconSize(QtCore.QSize(12, 12))
         self.label_inactive.setCheckable(False)
         self.label_inactive.setAutoExclusive(False)
@@ -352,9 +356,9 @@ class Ui_Main(object):
 "color:white;\n"
 "")
         self.btn_cancel.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/cancel.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_cancel.setIcon(icon6)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons/cancel.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_cancel.setIcon(icon7)
         self.btn_cancel.setIconSize(QtCore.QSize(22, 22))
         self.btn_cancel.setCheckable(False)
         self.btn_cancel.setAutoExclusive(False)
@@ -370,9 +374,9 @@ class Ui_Main(object):
 "color:white;\n"
 "")
         self.btn_accept.setText("")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/icons/accept.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_accept.setIcon(icon7)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(":/icons/accept.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_accept.setIcon(icon8)
         self.btn_accept.setIconSize(QtCore.QSize(22, 22))
         self.btn_accept.setCheckable(False)
         self.btn_accept.setAutoExclusive(False)
@@ -386,9 +390,9 @@ class Ui_Main(object):
         self.btn_edit.setStyleSheet("background-color: transparent;\n"
 "border:none;")
         self.btn_edit.setText("")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(":/icons/pen.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_edit.setIcon(icon8)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(":/icons/pen.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_edit.setIcon(icon9)
         self.btn_edit.setIconSize(QtCore.QSize(22, 22))
         self.btn_edit.setCheckable(False)
         self.btn_edit.setAutoExclusive(False)
@@ -425,9 +429,9 @@ class Ui_Main(object):
 "color:white;\n"
 "")
         self.btn_info.setText("")
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap(":/icons/info.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_info.setIcon(icon9)
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap(":/icons/info.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_info.setIcon(icon10)
         self.btn_info.setIconSize(QtCore.QSize(22, 22))
         self.btn_info.setCheckable(False)
         self.btn_info.setAutoExclusive(False)
@@ -443,9 +447,9 @@ class Ui_Main(object):
 "color:white;\n"
 "")
         self.btn_github.setText("")
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap(":/icons/github.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_github.setIcon(icon10)
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap(":/icons/github.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_github.setIcon(icon11)
         self.btn_github.setIconSize(QtCore.QSize(22, 22))
         self.btn_github.setCheckable(False)
         self.btn_github.setAutoExclusive(False)
@@ -459,9 +463,9 @@ class Ui_Main(object):
         self.btn_export.setStyleSheet("background-color: #000000;\n"
 "border:none;")
         self.btn_export.setText("")
-        icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap(":/icons/export.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_export.setIcon(icon11)
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap(":/icons/export.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_export.setIcon(icon12)
         self.btn_export.setIconSize(QtCore.QSize(22, 22))
         self.btn_export.setCheckable(False)
         self.btn_export.setAutoExclusive(False)
@@ -477,9 +481,9 @@ class Ui_Main(object):
 "color:white;\n"
 "")
         self.btn_delete.setText("")
-        icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap(":/icons/trash.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_delete.setIcon(icon12)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap(":/icons/trash.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_delete.setIcon(icon13)
         self.btn_delete.setIconSize(QtCore.QSize(22, 22))
         self.btn_delete.setCheckable(False)
         self.btn_delete.setAutoExclusive(False)
@@ -499,9 +503,9 @@ class Ui_Main(object):
 "color:white;\n"
 "")
         self.btn_az.setText("")
-        icon13 = QtGui.QIcon()
-        icon13.addPixmap(QtGui.QPixmap(":/icons/az.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_az.setIcon(icon13)
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap(":/icons/az.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_az.setIcon(icon14)
         self.btn_az.setIconSize(QtCore.QSize(22, 22))
         self.btn_az.setCheckable(False)
         self.btn_az.setAutoExclusive(False)
@@ -515,9 +519,9 @@ class Ui_Main(object):
         self.btn_en.setStyleSheet("background-color: #000000;\n"
 "border:none;")
         self.btn_en.setText("")
-        icon14 = QtGui.QIcon()
-        icon14.addPixmap(QtGui.QPixmap(":/icons/en.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_en.setIcon(icon14)
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(QtGui.QPixmap(":/icons/en.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_en.setIcon(icon15)
         self.btn_en.setIconSize(QtCore.QSize(22, 22))
         self.btn_en.setCheckable(False)
         self.btn_en.setAutoExclusive(False)
@@ -533,9 +537,9 @@ class Ui_Main(object):
 "color:white;\n"
 "")
         self.btn_ru.setText("")
-        icon15 = QtGui.QIcon()
-        icon15.addPixmap(QtGui.QPixmap(":/icons/ru.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_ru.setIcon(icon15)
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap(":/icons/ru.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_ru.setIcon(icon16)
         self.btn_ru.setIconSize(QtCore.QSize(22, 22))
         self.btn_ru.setCheckable(False)
         self.btn_ru.setAutoExclusive(False)
@@ -550,7 +554,7 @@ class Ui_Main(object):
 
     def retranslateUi(self, Main):
         _translate = QtCore.QCoreApplication.translate
-        Main.setWindowTitle(_translate("Main", "MainWindow"))
+        Main.setWindowTitle(_translate("Main", "OctoBot"))
         self.label_header_log.setText(_translate("Main", "Activity Log"))
         self.label_comment_log.setText(_translate("Main", "Real-time status updates and message delivery reports."))
         self.Log.setPlaceholderText(_translate("Main", "No log..."))
