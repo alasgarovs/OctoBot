@@ -1,5 +1,9 @@
 <RCC>
   <qresource>
+    <file>../icons/broom.png</file>
+    <file>../icons/az.png</file>
+    <file>../icons/en.png</file>
+    <file>../icons/ru.png</file>
     <file>../icons/accept.png</file>
     <file>../icons/cancel.png</file>
     <file>../icons/pen.png</file>

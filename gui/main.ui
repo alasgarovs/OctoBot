@@ -87,52 +87,99 @@ QLabel{
         <height>235</height>
        </size>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>10</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLabel" name="label_header_log">
-           <property name="font">
-            <font>
-             <family>Adwaita Mono</family>
-             <pointsize>12</pointsize>
-             <bold>true</bold>
-            </font>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <property name="text">
-            <string>Activity Log</string>
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-          </widget>
+           <property name="topMargin">
+            <number>10</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_header_log">
+             <property name="font">
+              <font>
+               <family>Adwaita Mono</family>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Activity Log</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_comment_log">
+             <property name="font">
+              <font>
+               <family>Adwaita Mono</family>
+               <pointsize>9</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Real-time status updates and message delivery reports.</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QLabel" name="label_comment_log">
+          <widget class="QPushButton" name="btn_reset_log">
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
-             <family>Adwaita Mono</family>
-             <pointsize>9</pointsize>
-             <bold>true</bold>
+             <pointsize>10</pointsize>
             </font>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: transparent;
+border:none;
+color:white;
+</string>
+           </property>
            <property name="text">
-            <string>Real-time status updates and message delivery reports.</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/broom.png</normaloff>:/icons/broom.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item>
+       <item row="1" column="0">
         <widget class="QTextEdit" name="Log">
          <property name="verticalScrollBarPolicy">
           <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
@@ -852,7 +899,7 @@ border:none;</string>
        </size>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
+       <item row="0" column="1">
         <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Orientation::Horizontal</enum>
@@ -865,7 +912,7 @@ border:none;</string>
          </property>
         </spacer>
        </item>
-       <item row="0" column="1">
+       <item row="0" column="2">
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
           <number>10</number>
@@ -1001,6 +1048,122 @@ color:white;
            <property name="icon">
             <iconset resource="resources.qrc">
              <normaloff>:/icons/trash.png</normaloff>:/icons/trash.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btn_az">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #000000;
+border:none;
+color:white;
+</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/az.png</normaloff>:/icons/az.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_en">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #000000;
+border:none;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/en.png</normaloff>:/icons/en.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_ru">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #000000;
+border:none;
+color:white;
+</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/ru.png</normaloff>:/icons/ru.png</iconset>
            </property>
            <property name="iconSize">
             <size>
