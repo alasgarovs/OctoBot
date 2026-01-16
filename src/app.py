@@ -181,6 +181,7 @@ class Main(QMainWindow, Ui_Main):
         self.btn_cancel.hide()
         self.label_active.hide()
         self.btn_stop.hide()
+
         self.fetch_message()
         self.fetch_temp_numbers_count()
         self.fetch_all_numbers_count()
@@ -280,6 +281,7 @@ class Main(QMainWindow, Ui_Main):
         self.label_active.show()
         self.label_inactive.hide()
         self.btn_start.hide()
+        self.btn_import.hide()
         self.btn_stop.show()
         
         self.log(self.tr("Bot operation is starting..."), self.activate)
@@ -305,15 +307,18 @@ class Main(QMainWindow, Ui_Main):
             if reply == QMessageBox.StandardButton.Yes:
                 self.worker.stop()
                 self.log(self.tr("Stopping operation..."), self.critical)
-                self.btn_start.show()
                 self.btn_stop.hide()
+                self.btn_start.show()
+                self.btn_import.show()
 
 
     def on_operation_finished(self):
         self.label_active.hide()
         self.label_inactive.show()
-        self.btn_start.show()
         self.btn_stop.hide()
+        self.btn_start.show()
+        self.btn_import.show()
+
         self.fetch_temp_numbers_count()
         self.fetch_all_numbers_count()
 
