@@ -14,9 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QTextCharFormat, QColor, QTextCursor, QCursor
-from PyQt6.QtCore import QThread, pyqtSignal
+from PyQt6.QtCore import QThread, pyqtSignal, QTranslator, QLocale, QCoreApplication
 
 from db_connect import *
 from info import *
@@ -32,6 +30,12 @@ class WhatsAppWorker(QThread):
         super().__init__()
         self.message = message
         self.is_running = True
+
+        self.success = ['\uf058', '#00d4ff']
+        self.activate = ['\uf058', "#00FF00"]
+        self.error = ['\uf057', "#FF0015"]
+        self.info = ['\uf05a', '#D8D9DB']
+        self.critical = ['\uf06a', "#FFBB00"]
     
     def stop(self):
         self.is_running = False
@@ -50,7 +54,10 @@ class WhatsAppWorker(QThread):
                 temp_numbers = session.query(TempNumbers).all()
             
             if not temp_numbers:
-                self.log_signal.emit("Error: The DB is empty, import numbers to the database.", ['\uf057', "#FF0015"])
+                self.log_signal.emit(
+                    QCoreApplication.translate("WhatsAppWorker", "Error: The DB is empty, import numbers to the database."),
+                    self.error
+                )
                 driver.quit()
                 self.operation_finished.emit()
                 return
@@ -70,7 +77,10 @@ class WhatsAppWorker(QThread):
                         session.delete(temp)
                     
                     if existing:
-                        self.log_signal.emit(f"This number has been used previously: +{num.number}.", ['\uf06a', "#FFBB00"])
+                        self.log_signal.emit(
+                            QCoreApplication.translate("WhatsAppWorker", "This number has been used previously: +{0}.").format(num.number),
+                            self.critical
+                        )
                         session.commit()
                         continue
                     
@@ -100,7 +110,10 @@ class WhatsAppWorker(QThread):
                         error_message = driver.find_elements(By.XPATH, '//div[contains(text(), "Phone number shared via url is invalid.")]')
                         
                         if error_message:
-                            self.log_signal.emit(f'Phone number +{num.number} shared via url is invalid.', ['\uf057', "#FF0015"])
+                            self.log_signal.emit(
+                                QCoreApplication.translate("WhatsAppWorker", "Phone number +{0} shared via url is invalid.").format(num.number),
+                                self.error
+                            )
                             continue
                         
                         if not self.is_running:
@@ -112,11 +125,17 @@ class WhatsAppWorker(QThread):
                         send_button.click()
                         time.sleep(3)
                         
-                        self.log_signal.emit(f"Message to +{num.number} sent successfully.", ['\uf058', '#00d4ff'])
+                        self.log_signal.emit(
+                            QCoreApplication.translate("WhatsAppWorker", "Message to +{0} sent successfully.").format(num.number),
+                            self.success
+                        )
                         session.add(Pool(number=num.number, whatsapp_status=True))
                         
                     except Exception as e:
-                        self.log_signal.emit(f"Failed to send message to +{num.number}: {e}.", ['\uf057', "#FF0015"])
+                        self.log_signal.emit(
+                            QCoreApplication.translate("WhatsAppWorker", "Failed to send message to +{0}: {1}.").format(num.number, e),
+                            self.error
+                        )
                     
                     session.commit()
                 
@@ -124,9 +143,15 @@ class WhatsAppWorker(QThread):
                 self.update_all_count.emit()
             
             if not self.is_running:
-                self.log_signal.emit("Operation stopped by user.", ['\uf06a', "#FFBB00"])
+                self.log_signal.emit(
+                    QCoreApplication.translate("WhatsAppWorker", "Operation stopped by user."),
+                    self.critical
+                )
             else:
-                self.log_signal.emit("Bot operation completed. All messages have been sent or attempted.", ['\uf05a', '#D8D9DB'])
+                self.log_signal.emit(
+                    QCoreApplication.translate("WhatsAppWorker", "Bot operation completed. All messages have been sent or attempted."),
+                    self.info
+                )
                 
         finally:
             driver.quit()
@@ -159,20 +184,28 @@ class Main(QMainWindow, Ui_Main):
         self.fetch_message()
         self.fetch_temp_numbers_count()
         self.fetch_all_numbers_count()
-        self.log(f"System initialized. Waiting for commands.", self.info)
+        self.log(self.tr("System initialized. Waiting for commands."), self.info)
         
 
     def setup_buttons(self):
-        self.btn_import.clicked.connect(self.select_excel_file)
-        self.btn_start.clicked.connect(self.start_operation)
-        self.btn_stop.clicked.connect(self.stop_operation)
-        self.btn_edit.clicked.connect(lambda checked: self.message_action("edit"))
-        self.btn_accept.clicked.connect(lambda checked: self.message_action("accept"))
-        self.btn_cancel.clicked.connect(lambda checked: self.message_action("cancel"))
+        self.btn_az.clicked.connect(lambda checked: self.change_lang("az"))
+        self.btn_en.clicked.connect(lambda checked: self.change_lang("en"))
+        self.btn_ru.clicked.connect(lambda checked: self.change_lang("ru"))
+
         self.btn_info.clicked.connect(self.about)
         self.btn_github.clicked.connect(self.github)
         self.btn_export.clicked.connect(self.export_db)
         self.btn_delete.clicked.connect(self.reset_db)
+
+        self.btn_import.clicked.connect(self.select_excel_file)
+        self.btn_start.clicked.connect(self.start_operation)
+        self.btn_stop.clicked.connect(self.stop_operation)
+
+        self.btn_edit.clicked.connect(lambda checked: self.message_action("edit"))
+        self.btn_accept.clicked.connect(lambda checked: self.message_action("accept"))
+        self.btn_cancel.clicked.connect(lambda checked: self.message_action("cancel"))
+
+        self.btn_reset_log.clicked.connect(lambda: self.Log.clear())    
 
 
     ############## IMPORT FROM EXCEL #####################
@@ -187,7 +220,7 @@ class Main(QMainWindow, Ui_Main):
         nums = nums.apply(lambda x: int(x) if float(x).is_integer() else float(x))
 
         if len(nums) == 0:
-            self.log(f"'{file_name}' file is empty.", self.error)
+            self.log(self.tr("'{0}' file is empty.").format(file_name), self.error)
             return
 
         try:
@@ -195,7 +228,7 @@ class Main(QMainWindow, Ui_Main):
                 session.query(TempNumbers).delete()
                 session.commit()
 
-                self.log(f"Uploading numbers from '{file_name}' file...", self.info)
+                self.log(self.tr("Uploading numbers from '{0}' file...").format(file_name), self.info)
                 for i, number in enumerate(nums, 1):
                     session.add(TempNumbers(number=number))
 
@@ -205,18 +238,18 @@ class Main(QMainWindow, Ui_Main):
                 session.commit()
 
         except Exception as e:
-            self.log(f"Database error: {e}.", self.error)
+            self.log(self.tr("Database error: {0}.").format(e), self.error)
             return
 
         self.fetch_temp_numbers_count()
-        self.log(f"Excel file '{file_name}' uploaded successfully ({len(nums)} contacts).", self.success)
+        self.log(self.tr("Excel file '{0}' uploaded successfully ({1} contacts).").format(file_name, len(nums)), self.success)
 
 
     def select_excel_file(self):
-        file_filter = "Excel Files (*.xlsx *.xls)"
+        file_filter = self.tr("Excel Files (*.xlsx *.xls)")
         file_path, _ = QFileDialog.getOpenFileName(
             None,
-            "Select Excel File",
+            self.tr("Select Excel File"),
             "",
             file_filter
         )
@@ -227,7 +260,7 @@ class Main(QMainWindow, Ui_Main):
         try:
             self.import_numbers(file_path, file_name)
         except Exception as e:
-            self.log(f"Error reading file '{file_name}': {e}.", self.error)
+            self.log(self.tr("Error reading file '{0}': {1}.").format(file_name, e), self.error)
 
 
     ############## OPERATIONS #################################
@@ -235,13 +268,13 @@ class Main(QMainWindow, Ui_Main):
 
     def start_operation(self):
         if self.worker and self.worker.isRunning():
-            self.log("Operation is already running!", self.critical)
+            self.log(self.tr("Operation is already running!"), self.critical)
             return
         
         message = self.Message.toPlainText().strip()
         
         if not message:
-            self.log("Please enter a message before starting.", self.error)
+            self.log(self.tr("Please enter a message before starting."), self.error)
             return
         
         self.label_active.show()
@@ -249,7 +282,7 @@ class Main(QMainWindow, Ui_Main):
         self.btn_start.hide()
         self.btn_stop.show()
         
-        self.log("Bot operation is starting...", self.activate)
+        self.log(self.tr("Bot operation is starting..."), self.activate)
         
         # Create and start worker thread
         self.worker = WhatsAppWorker(message)
@@ -264,14 +297,14 @@ class Main(QMainWindow, Ui_Main):
         if self.worker and self.worker.isRunning():
             reply = QMessageBox.question(
                 self,
-                "Stop Operation",
-                "Are you sure you want to stop the operation?",
+                self.tr("Stop Operation"),
+                self.tr("Are you sure you want to stop the operation?"),
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
             )
             
             if reply == QMessageBox.StandardButton.Yes:
                 self.worker.stop()
-                self.log("Stopping operation...", self.critical)
+                self.log(self.tr("Stopping operation..."), self.critical)
                 self.btn_start.show()
                 self.btn_stop.hide()
 
@@ -310,19 +343,14 @@ class Main(QMainWindow, Ui_Main):
             if action == 'accept':
                 reply = QMessageBox.question(
                     self,
-                    "Save Message",
-                    "Are you sure you want to save message?",
+                    self.tr("Save Message"),
+                    self.tr("Are you sure you want to save message?"),
                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
                 )
                 
                 if reply == QMessageBox.StandardButton.Yes:
                     try:
                         message_text = self.Message.toPlainText().strip()
-                        
-                        # if not message_text:
-                        #     QMessageBox.warning(self, "Empty Message", "Message cannot be empty.")
-                        #     self.Message.setFocus()
-                        #     return
    
                         with Session() as session:
                             first_msg = session.query(Message).order_by(Message.id).first()
@@ -336,7 +364,7 @@ class Main(QMainWindow, Ui_Main):
                             session.commit()
                             
                     except Exception as e:
-                        QMessageBox.critical(self, "Error", f"Failed to save message:\n{str(e)}")
+                        QMessageBox.critical(self, self.tr("Error"), self.tr("Failed to save message:\n{0}").format(str(e)))
                         return
                 else:
                     self.Message.setFocus()
@@ -345,8 +373,8 @@ class Main(QMainWindow, Ui_Main):
             else: 
                 reply = QMessageBox.question(
                     self,
-                    "Cancel Editing",
-                    "Are you sure you want to discard changes?",
+                    self.tr("Cancel Editing"),
+                    self.tr("Are you sure you want to discard changes?"),
                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
                 )
                 
@@ -380,12 +408,34 @@ class Main(QMainWindow, Ui_Main):
     ############## TOP BUTTONS #######################
     ##################################################
 
+    ####### Change language ############################
+    def change_lang(self, language):
+        # Remove old translator
+        if hasattr(self, 'translator'):
+            QApplication.instance().removeTranslator(self.translator)
+        
+        # Create new translator
+        self.translator = QTranslator()
+        
+        if self.translator.load(f"src/translations/app_{language}.qm"):
+            QApplication.instance().installTranslator(self.translator)
+            self.retranslate_ui()
+            self.log(self.tr("Language changed to {0}").format(language.upper()), self.info)
+        else:
+            self.log(self.tr("Failed to load translation for {0}").format(language.upper()), self.error)
+
+    def retranslate_ui(self):
+        self.setWindowTitle(self.title)
+
     ####### Reset DB ############################
     def reset_db(self):
-        reply = QMessageBox.question(self, 'Confirm Reset', 
-                                     "Are you sure you want to reset the database?",
-                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                                     QMessageBox.StandardButton.No)
+        reply = QMessageBox.question(
+            self, 
+            self.tr('Confirm Reset'), 
+            self.tr("Are you sure you want to reset the database?"),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No
+        )
 
         if reply == QMessageBox.StandardButton.Yes:
             with Session() as session:
@@ -395,7 +445,7 @@ class Main(QMainWindow, Ui_Main):
                 session.query(TempNumbers).delete()
                 session.commit()
 
-                self.log(f"The database has been successfully reset to its initial state.", self.success)
+                self.log(self.tr("The database has been successfully reset to its initial state."), self.success)
                 self.fetch_all_numbers_count()
                 self.fetch_temp_numbers_count()
 
@@ -407,15 +457,15 @@ class Main(QMainWindow, Ui_Main):
                 results = session.query(Pool.number, Pool.whatsapp_status).all()
 
                 if not results:
-                    QMessageBox.warning(self, "No Data", "The Numbers is empty. Nothing to export.")
+                    QMessageBox.warning(self, self.tr("No Data"), self.tr("The Numbers is empty. Nothing to export."))
                     return
 
                 default_filename = f"numbers_ex_{datetime.now().strftime('%Y%m%d')}.xlsx"
                 file_path, _ = QFileDialog.getSaveFileName(
                     self,
-                    "Export to Excel",
+                    self.tr("Export to Excel"),
                     default_filename,
-                    "Excel Files (*.xlsx)"
+                    self.tr("Excel Files (*.xlsx)")
                 )
 
                 if not file_path:
@@ -432,13 +482,13 @@ class Main(QMainWindow, Ui_Main):
                 df = pd.DataFrame(data)
                 df.to_excel(file_path, index=False)
 
-            QMessageBox.information(self, "Success", f"Data exported successfully to:\n{file_path}")
+            QMessageBox.information(self, self.tr("Success"), self.tr("Data exported successfully to:\n{0}").format(file_path))
 
         except Exception as e:
-            QMessageBox.critical(self, "Error", f"Failed to export data:\n{str(e)}")
+            QMessageBox.critical(self, self.tr("Error"), self.tr("Failed to export data:\n{0}").format(str(e)))
 
     ######## About ###########################
-    def about (self):
+    def about(self):
         about_info = f"""\n
         Version: {app_version}
         Commit: {commit}
@@ -448,7 +498,7 @@ class Main(QMainWindow, Ui_Main):
         OS: Linux x64, Windows (10, 11) x64
         """
 
-        self.MessageBox('info' , about_info)
+        QMessageBox.information(self, self.title, about_info)
 
     ######## Github #########################
     def github(self):
@@ -468,28 +518,27 @@ class Main(QMainWindow, Ui_Main):
 
 
     def confirm_exit(self):
-        reply = QMessageBox.question(self, self.title,
-                                     'Are you sure want to exit?',
-                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                                     QMessageBox.StandardButton.No)
+        reply = QMessageBox.question(
+            self, 
+            self.title,
+            self.tr('Are you sure want to exit?'),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No
+        )
 
         if reply == QMessageBox.StandardButton.Yes:
             QApplication.quit()
-        else:
-            pass
-
-
-    def MessageBox(self, type,message):
-        if type == 'info':
-            QMessageBox.information(self, self.title, message)
-        elif type == 'error':
-            QMessageBox.critical(self, self.title, message)
-
-
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    
+    translator = QTranslator()
+    locale = QLocale.system().name()[:2]
+    
+    if translator.load(f"translations/app_{locale}.qm"):
+        app.installTranslator(translator)
+    
     main_window = Main()
     main_window.show()
     sys.exit(app.exec())
