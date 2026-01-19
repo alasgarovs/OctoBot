@@ -175,6 +175,7 @@ class Main(QMainWindow, Ui_Main):
         
         self.worker = None
 
+        # set labels text
         self.label_header_operations.setText(self.tr('Bot Operations'))
         self.label_comment_operations.setText(self.tr('Manage your WhatsApp campaign messages.'))
         self.status.setText(self.tr('Status'))
