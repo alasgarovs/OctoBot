@@ -576,6 +576,23 @@ border:none;</string>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_13">
                 <item>
+                 <widget class="QLabel" name="temp_numbers">
+                  <property name="font">
+                   <font>
+                    <family>Sans Serif</family>
+                    <pointsize>9</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Numbers in the temporary database</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLabel" name="label_temp_numbers">
                   <property name="font">
                    <font>
@@ -589,23 +606,6 @@ border:none;</string>
                   </property>
                   <property name="text">
                    <string>0</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="temp_numbers">
-                  <property name="font">
-                   <font>
-                    <family>Sans Serif</family>
-                    <pointsize>9</pointsize>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 255, 255);</string>
-                  </property>
-                  <property name="text">
-                   <string>numbers in the temporary database</string>
                   </property>
                  </widget>
                 </item>
@@ -627,6 +627,23 @@ border:none;</string>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_17">
                 <item>
+                 <widget class="QLabel" name="DB_numbers">
+                  <property name="font">
+                   <font>
+                    <family>Sans Serif</family>
+                    <pointsize>9</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Numbers in the Pool</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLabel" name="label_DB_numbers">
                   <property name="font">
                    <font>
@@ -640,23 +657,6 @@ border:none;</string>
                   </property>
                   <property name="text">
                    <string>0</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="DB_numbers">
-                  <property name="font">
-                   <font>
-                    <family>Sans Serif</family>
-                    <pointsize>9</pointsize>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 255, 255);</string>
-                  </property>
-                  <property name="text">
-                   <string>numbers in the Pool</string>
                   </property>
                  </widget>
                 </item>
