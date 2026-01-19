@@ -170,12 +170,14 @@ class Main(QMainWindow, Ui_Main):
         self.info = ['\uf05a', '#D8D9DB']
         self.critical = ['\uf06a', "#FFBB00"]
         
+        self.setup_interface()
         self.setup_window()
         self.setup_buttons()
         
         self.worker = None
 
-        # set labels text
+    def setup_interface(self):
+        self.setWindowTitle(self.title)
         self.label_header_operations.setText(self.tr('Bot Operations'))
         self.label_comment_operations.setText(self.tr('Manage your WhatsApp campaign messages.'))
         self.status.setText(self.tr('Status'))
@@ -197,7 +199,6 @@ class Main(QMainWindow, Ui_Main):
         self.btn_stop.setText(self.tr('Stop'))
 
     def setup_window(self):
-        self.setWindowTitle(self.title)
         self.btn_accept.hide()
         self.btn_cancel.hide()
         self.label_active.hide()
@@ -446,12 +447,13 @@ class Main(QMainWindow, Ui_Main):
         if self.translator.load(f"src/translations/app_{language}.qm"):
             QApplication.instance().installTranslator(self.translator)
             self.retranslate_ui()
-            self.log(self.tr("Language changed to {0}").format(language.upper()), self.info)
+            self.log(self.tr("Language changed to {0}").format(language.upper()), self.success)
         else:
             self.log(self.tr("Failed to load translation for {0}").format(language.upper()), self.error)
 
     def retranslate_ui(self):
-        self.setWindowTitle(self.title)
+        self.setup_interface()
+        QApplication.processEvents()     
 
     ####### Reset DB ############################
     def reset_db(self):
