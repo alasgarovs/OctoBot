@@ -175,6 +175,26 @@ class Main(QMainWindow, Ui_Main):
         
         self.worker = None
 
+        self.label_header_operations.setText(self.tr('Bot Operations'))
+        self.label_comment_operations.setText(self.tr('Manage your WhatsApp campaign messages.'))
+        self.status.setText(self.tr('Status'))
+        self.label_active.setText(self.tr('active (running)'))
+        self.label_inactive.setText(self.tr('inactive (dead)'))
+        self.temp_numbers.setText(self.tr('Numbers in the temporary database'))
+        self.DB_numbers.setText(self.tr('Numbers in the Pool'))
+
+        self.label_header_message.setText(self.tr('Message Preview'))
+        self.label_comment_message.setText(self.tr('See how your message will look.'))
+        self.Message.setPlaceholderText(self.tr('No message...'))
+
+        self.label_header_log.setText(self.tr('Activity Log'))
+        self.label_comment_log.setText(self.tr('Real-time status updates and message delivery reports.'))
+        self.Log.setPlaceholderText(self.tr('No log...'))
+
+        self.btn_import.setText(self.tr('Import'))
+        self.btn_start.setText(self.tr('Start'))
+        self.btn_stop.setText(self.tr('Stop'))
+
     def setup_window(self):
         self.setWindowTitle(self.title)
         self.btn_accept.hide()
