@@ -4,179 +4,266 @@
 <context>
     <name>Main</name>
     <message>
+        <location filename="../app.py" line="178" />
+        <source>Bot Operations</source>
+        <translation>Bot Əməliyyatları</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="179" />
+        <source>Manage your WhatsApp campaign messages.</source>
+        <translation>WhatsApp mesajlarınızı idarə edin.</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="180" />
+        <source>Status</source>
+        <translation>Vəziyyət</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="181" />
+        <source>active (running)</source>
+        <translation>aktiv (işləyir)</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="182" />
+        <source>inactive (dead)</source>
+        <translation>deaktiv (dayandırılıb)</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="183" />
+        <source>Numbers in the temporary database</source>
+        <translation>Müvəqqəti verilənlər bazasındakı nömrələr</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="184" />
+        <source>Numbers in the Pool</source>
+        <translation>Bazadakı nömrələr</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="186" />
+        <source>Message Preview</source>
+        <translation>Mesaj Önizləməsi</translation>
+    </message>
+    <message>
         <location filename="../app.py" line="187" />
+        <source>See how your message will look.</source>
+        <translation>Mesajınızın necə görünəcəyini görün.</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="188" />
+        <source>No message...</source>
+        <translation>Mesaj yoxdur...</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="190" />
+        <source>Activity Log</source>
+        <translation>Fəaliyyət Qeydləri</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="191" />
+        <source>Real-time status updates and message delivery reports.</source>
+        <translation>Canlı vəziyyət yeniləmələri və mesaj çatdırılma hesabatları.</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="192" />
+        <source>No log...</source>
+        <translation>Qeyd yoxdur...</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="194" />
+        <source>Import</source>
+        <translation>Daxil et</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="195" />
+        <source>Start</source>
+        <translation>Başla</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="196" />
+        <source>Stop</source>
+        <translation>Dayandır</translation>
+    </message>
+    <message>
+        <location filename="../app.py" line="208" />
         <source>System initialized. Waiting for commands.</source>
         <translation>Sistem işə salındı. Əmrlər gözlənilir.</translation>
     </message>
     <message>
-        <location filename="../app.py" line="223" />
+        <location filename="../app.py" line="244" />
         <source>'{0}' file is empty.</source>
         <translation>'{0}' faylı boşdur.</translation>
     </message>
     <message>
-        <location filename="../app.py" line="231" />
+        <location filename="../app.py" line="252" />
         <source>Uploading numbers from '{0}' file...</source>
         <translation>'{0}' faylından nömrələr yüklənir...</translation>
     </message>
     <message>
-        <location filename="../app.py" line="241" />
+        <location filename="../app.py" line="262" />
         <source>Database error: {0}.</source>
         <translation>Verilənlər bazası xətası: {0}.</translation>
     </message>
     <message>
-        <location filename="../app.py" line="245" />
+        <location filename="../app.py" line="266" />
         <source>Excel file '{0}' uploaded successfully ({1} contacts).</source>
         <translation>Excel faylı '{0}' uğurla yükləndi ({1} kontakt).</translation>
     </message>
     <message>
-        <location filename="../app.py" line="249" />
+        <location filename="../app.py" line="270" />
         <source>Excel Files (*.xlsx *.xls)</source>
         <translation>Excel Faylları (*.xlsx *.xls)</translation>
     </message>
     <message>
-        <location filename="../app.py" line="252" />
+        <location filename="../app.py" line="273" />
         <source>Select Excel File</source>
         <translation>Excel Faylını Seçin</translation>
     </message>
     <message>
-        <location filename="../app.py" line="263" />
+        <location filename="../app.py" line="284" />
         <source>Error reading file '{0}': {1}.</source>
         <translation>Fayl oxunarkən xəta '{0}': {1}.</translation>
     </message>
     <message>
-        <location filename="../app.py" line="271" />
+        <location filename="../app.py" line="292" />
         <source>Operation is already running!</source>
         <translation>Əməliyyat artıq işləyir!</translation>
     </message>
     <message>
-        <location filename="../app.py" line="277" />
+        <location filename="../app.py" line="298" />
         <source>Please enter a message before starting.</source>
         <translation>Başlamazdan əvvəl mesaj daxil edin.</translation>
     </message>
     <message>
-        <location filename="../app.py" line="285" />
+        <location filename="../app.py" line="307" />
         <source>Bot operation is starting...</source>
         <translation>Bot əməliyyatı başlayır...</translation>
     </message>
     <message>
-        <location filename="../app.py" line="300" />
+        <location filename="../app.py" line="322" />
         <source>Stop Operation</source>
         <translation>Əməliyyatı Dayandır</translation>
     </message>
     <message>
-        <location filename="../app.py" line="301" />
+        <location filename="../app.py" line="323" />
         <source>Are you sure you want to stop the operation?</source>
         <translation>Əməliyyatı dayandırmaq istədiyinizdən əminsiniz?</translation>
     </message>
     <message>
-        <location filename="../app.py" line="307" />
+        <location filename="../app.py" line="329" />
         <source>Stopping operation...</source>
         <translation>Əməliyyat dayandırılır...</translation>
     </message>
     <message>
-        <location filename="../app.py" line="346" />
+        <location filename="../app.py" line="371" />
         <source>Save Message</source>
         <translation>Mesajı Saxla</translation>
     </message>
     <message>
-        <location filename="../app.py" line="347" />
+        <location filename="../app.py" line="372" />
         <source>Are you sure you want to save message?</source>
         <translation>Mesajı saxlamaq istədiyinizdən əminsiniz?</translation>
     </message>
     <message>
-        <location filename="../app.py" line="494" />
-        <location filename="../app.py" line="367" />
+        <location filename="../app.py" line="513" />
+        <location filename="../app.py" line="392" />
         <source>Error</source>
         <translation>Xəta</translation>
     </message>
     <message>
-        <location filename="../app.py" line="367" />
+        <location filename="../app.py" line="392" />
         <source>Failed to save message:
 {0}</source>
         <translation>Mesaj saxlanılmadı:
 {0}</translation>
     </message>
     <message>
-        <location filename="../app.py" line="376" />
+        <location filename="../app.py" line="401" />
         <source>Cancel Editing</source>
         <translation>Redaktəni Ləğv Et</translation>
     </message>
     <message>
-        <location filename="../app.py" line="377" />
+        <location filename="../app.py" line="402" />
         <source>Are you sure you want to discard changes?</source>
         <translation>Dəyişiklikləri ləğv etmək istədiyinizdən əminsiniz?</translation>
     </message>
     <message>
-        <location filename="../app.py" line="425" />
+        <location filename="../app.py" line="448" />
         <source>Language changed to {0}</source>
         <translation>Dil {0} olaraq dəyişdirildi</translation>
     </message>
     <message>
-        <location filename="../app.py" line="427" />
+        <location filename="../app.py" line="450" />
         <source>Failed to load translation for {0}</source>
         <translation>{0} üçün tərcümə yüklənmədi</translation>
     </message>
     <message>
-        <location filename="../app.py" line="440" />
+        <location filename="../app.py" line="459" />
         <source>Confirm Reset</source>
         <translation>Sıfırlamağı Təsdiq Et</translation>
     </message>
     <message>
-        <location filename="../app.py" line="441" />
+        <location filename="../app.py" line="460" />
         <source>Are you sure you want to reset the database?</source>
         <translation>Verilənlər bazasını sıfırlamaq istədiyinizdən əminsiniz?</translation>
     </message>
     <message>
-        <location filename="../app.py" line="454" />
+        <location filename="../app.py" line="473" />
         <source>The database has been successfully reset to its initial state.</source>
         <translation>Verilənlər bazası uğurla ilkin vəziyyətinə qaytarıldı.</translation>
     </message>
     <message>
-        <location filename="../app.py" line="466" />
+        <location filename="../app.py" line="485" />
         <source>No Data</source>
         <translation>Məlumat Yoxdur</translation>
     </message>
     <message>
-        <location filename="../app.py" line="466" />
+        <location filename="../app.py" line="485" />
         <source>The Numbers is empty. Nothing to export.</source>
         <translation>Nömrələr boşdur. İxrac ediləcək heç nə yoxdur.</translation>
     </message>
     <message>
-        <location filename="../app.py" line="472" />
+        <location filename="../app.py" line="491" />
         <source>Export to Excel</source>
         <translation>Excel-ə İxrac Et</translation>
     </message>
     <message>
-        <location filename="../app.py" line="474" />
+        <location filename="../app.py" line="493" />
         <source>Excel Files (*.xlsx)</source>
         <translation>Excel Faylları (*.xlsx)</translation>
     </message>
     <message>
-        <location filename="../app.py" line="491" />
+        <location filename="../app.py" line="510" />
         <source>Success</source>
         <translation>Uğurlu</translation>
     </message>
     <message>
-        <location filename="../app.py" line="491" />
+        <location filename="../app.py" line="510" />
         <source>Data exported successfully to:
 {0}</source>
         <translation>Məlumatlar uğurla ixrac edildi:
 {0}</translation>
     </message>
     <message>
-        <location filename="../app.py" line="494" />
+        <location filename="../app.py" line="513" />
         <source>Failed to export data:
 {0}</source>
         <translation>Məlumatlar ixrac edilmədi:
 {0}</translation>
     </message>
     <message>
-        <location filename="../app.py" line="530" />
+        <location filename="../app.py" line="549" />
         <source>Are you sure want to exit?</source>
         <translation>Çıxmaq istədiyinizdən əminsiniz?</translation>
     </message>
-</context>
-<context>
+    <message>
+        <source>numbers in the temporary database</source>
+        <translation type="vanished">Müvəqqəti verilənlər bazasındakı nömrələr</translation>
+    </message>
+    <message>
+        <source>numbers in the Pool</source>
+        <translation type="vanished"> nömrələr</translation>
+    </message>
+</context><context>
     <name>WhatsAppWorker</name>
     <message>
         <location filename="../app.py" line="58" />
@@ -213,5 +300,4 @@
         <source>Bot operation completed. All messages have been sent or attempted.</source>
         <translation>Bot əməliyyatı tamamlandı. Bütün mesajlar göndərildi və ya cəhd edildi.</translation>
     </message>
-</context>
-</TS>
+</context></TS>
