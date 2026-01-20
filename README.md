@@ -1,54 +1,100 @@
-# OctoBot - WhatsApp Bot
+# OctoBot - WhatsApp Automation Made Easy
 
 <div align="center">
-  <img src="icons/octopus.png" alt="Logo" width="200"/>
+  <img src="icons/octopus.png" alt="OctoBot Logo" width="200"/>
+  
+  ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+  ![PyQt6](https://img.shields.io/badge/PyQt6-GUI-green.svg)
+  ![Selenium](https://img.shields.io/badge/Selenium-WebDriver-yellow.svg)
+  ![License](https://img.shields.io/badge/license-MIT-purple.svg)
+  
 </div>
 
-## Overview
+## ✨ What is OctoBot?
 
-This project is a **WhatsApp Messaging Bot** developed using **Python**, **PyQt6** and **Selenium**. The bot is designed to extract phone numbers from Excel file and send automated messages to each contact via WhatsApp Web.
+OctoBot is a **WhatsApp messaging automation tool** that streamlines your communication workflow. Built with Python, PyQt6, and Selenium. It seamlessly integrates with WhatsApp Web to send personalized messages to multiple contacts from your Excel spreadsheets.
 
-## Demo
+### 🎯 Key Features
 
-<img width="600" height="400" alt="screenshot-01" src="https://github.com/user-attachments/assets/8871f01c-2e00-4418-ba37-c6756fbb133b" />
+* 📊 **Excel Integration** - Import contacts directly from Excel files
+* 🤖 **Automated Messaging** - Send bulk messages effortlessly through WhatsApp Web
+* 🎨 **Modern GUI** - Clean, intuitive interface built with PyQt6
+* 🌍 **Multi-language Support** - Available in English, Russian, and Azerbaijani
+* ⚡ **Fast & Reliable** - Efficient message delivery with smart queue management
 
-## Installation
+## 📸 Preview
 
-### For end users
+<div align="center">   <img width="600" height="400" alt="OctoBot Interface" src="https://github.com/user-attachments/assets/8871f01c-2e00-4418-ba37-c6756fbb133b" /> </div>
 
-- Just download pre-built packages (coming soon)
+## 🚀 Getting Started
 
-### For developers
+### For End Users
+
+Pre-built packages coming soon! Stay tuned for one-click installation.
+
+### For Developers
 
 ```console
 # Clone the repository
 git clone https://github.com/alasgarovs/OctoBot.git
 cd OctoBot
 
-# Install requirements
+# Install dependencies
 pip install -r requirements.txt
 
-# Run app.py
+# Launch the application
 python src/app.py
+```
 
-# Update all .ts files with new/changed strings from app.py
+### 🛠️ Development Commands
+
+```console
+# Update translation files with new strings
 make update-translations
 
-# Compile all .ts → .qm
+# Compile all translation files (.ts → .qm)
 make compile-translations
 
-# Clean compiled .qm files
+# Clean compiled translation files
 make clean
 ```
 
-## Languages
+## 🌐 Language Support
 
-OctoBot supports multiple interface languages:
+OctoBot speaks your language:
 
-- 🇬🇧 **English** - default
-- 🇷🇺 **Russian** - full translation
-- 🇦🇿 **Azerbaijani** - full translation
+| Language         | Status   | Code     |
+| ------------------ | ---------- | ---------- |
+| 🇬🇧 English     | Default  | `en` |
+| 🇷🇺 Russian     | Complete | `ru` |
+| 🇦🇿 Azerbaijani | Complete | `az` |
 
-### Project status update
+## 🤝 Contributing
 
-We are continuously working on building and enhancing features to improve functionality and user experience.
+Contributions are welcome! Feel free to:
+
+* 🐛 Report bugs
+* 💡 Suggest new features
+* 🔧 Submit pull requests
+* 📖 Improve documentation
+
+## ⚠️ Disclaimer
+
+This tool is intended for legitimate communication purposes only. Please ensure you:
+
+* Have consent from recipients before sending messages
+* Comply with WhatsApp's Terms of Service
+* Follow local regulations regarding automated messaging
+* Use responsibly and ethically
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/alasgarovs/OctoBot/blob/main/LICENSE) file for details.
+
+---
+
+<div align="center">
+
+⭐ Star us on GitHub if you find this project helpful!
+
+</div>
