@@ -216,7 +216,6 @@ class Main(QMainWindow, Ui_Main):
         self.btn_ru.clicked.connect(lambda checked: self.change_lang("ru"))
 
         self.btn_info.clicked.connect(self.about)
-        self.btn_github.clicked.connect(self.github)
         self.btn_export.clicked.connect(self.export_db)
         self.btn_delete.clicked.connect(self.reset_db)
 
@@ -524,13 +523,37 @@ class Main(QMainWindow, Ui_Main):
         PyQt6: 6.9.1
         OS: Linux x64, Windows (10, 11) x64\n
         {legal_copyright}
+
+        <p><a href='http://www.google.com'>www.google.com</a></p>
         """
 
         QMessageBox.information(self, self.title, about_info)
 
-    ######## Github #########################
-    def github(self):
-        webbrowser.open("https://github.com/alasgarovs/OctoBot.git")
+    def about(self):
+        about_info = f"""
+        <p>App: {app_name}</p>
+        <p>Version: {app_version}</p>
+        <p>Tools: Python, PyQt6, Selenium</p>
+        <p>OS: Linux x64, Windows (10, 11) x64</p>
+        <p>{legal_copyright}</p>
+        <hr>
+        <p>The best part is free and open source :)</p>
+        <p><a href='https://github.com/alasgarovs/OctoBot.git' style="color:#2F64B5;">https://github.com/alasgarovs/OctoBot.git</a></p>
+        """
+
+        QMessageBox.information(self, self.title, about_info)
+
+    def new_version_info(self):
+        # coming soon
+        pass
+
+    def update(self):
+        # coming soon
+        pass
+
+    def license_key(self):
+        #free
+        pass
 
     ############## QUIT ##################################
     ######################################################
