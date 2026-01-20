@@ -6,7 +6,7 @@
   ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
   ![PyQt6](https://img.shields.io/badge/PyQt6-GUI-green.svg)
   ![Selenium](https://img.shields.io/badge/Selenium-WebDriver-yellow.svg)
-  ![License](https://img.shields.io/badge/license-MIT-purple.svg)
+  ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
   
 </div>
 
@@ -89,7 +89,7 @@ This tool is intended for legitimate communication purposes only. Please ensure 
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/alasgarovs/OctoBot/blob/main/LICENSE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/alasgarovs/OctoBot/blob/main/LICENSE) file for details.
 
 ---
 
