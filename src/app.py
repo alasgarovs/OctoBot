@@ -517,13 +517,13 @@ class Main(QMainWindow, Ui_Main):
 
     ######## About ###########################
     def about(self):
-        about_info = f"""\n
+        about_info = f"""
+        \tOctoBot\n
         Version: {app_version}
-        Commit: {commit}
-        Date: {last_update}
-        Python: 3.13.7
+        Python: 3.13.7 
         PyQt6: 6.9.1
-        OS: Linux x64, Windows (10, 11) x64
+        OS: Linux x64, Windows (10, 11) x64\n
+        {legal_copyright}
         """
 
         QMessageBox.information(self, self.title, about_info)

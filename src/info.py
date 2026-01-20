@@ -1,7 +1,5 @@
 app_name = 'OctoBot'
 app_version= '1.0.0'
-commit = ''
-last_update = ''
 original_filename = 'OctoBot.exe'
 file_description = 'WhatsApp Messaging Bot'
 company_name = ''
