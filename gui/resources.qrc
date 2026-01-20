@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>../icons/key.png</file>
     <file>../icons/octopus.png</file>
     <file>../icons/broom.png</file>
     <file>../icons/az.png</file>
