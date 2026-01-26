@@ -35,10 +35,6 @@ Pre-built packages coming soon! Stay tuned for one-click installation.
 ### For Developers
 
 ```console
-# Clone the repository
-git clone https://github.com/alasgarovs/OctoBot.git
-cd OctoBot
-
 # Install dependencies
 pip install -r requirements.txt
 
