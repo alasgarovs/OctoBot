@@ -44,6 +44,9 @@ pip install -r requirements.txt
 
 # Launch the application
 python src/app.py
+
+# Convert .ui files to .py
+python ui_to_py.py
 ```
 
 ### 🛠️ Development Commands
