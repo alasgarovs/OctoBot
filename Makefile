@@ -11,3 +11,7 @@ compile-translations:
 # Clean compiled .qm files
 clean:
 	rm -f src/translations/*.qm
+
+# Convert .ui files to .py
+convert:
+	python ui_to_py.py
