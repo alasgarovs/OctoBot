@@ -2,12 +2,12 @@
 
 <div align="center">
   <img src="icons/octopus.png" alt="OctoBot Logo" width="200"/>
-  
-  ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-  ![PyQt6](https://img.shields.io/badge/PyQt6-GUI-green.svg)
-  ![Selenium](https://img.shields.io/badge/Selenium-WebDriver-yellow.svg)
-  ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
-  
+
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![PyQt6](https://img.shields.io/badge/PyQt6-GUI-green.svg)
+![Selenium](https://img.shields.io/badge/Selenium-WebDriver-yellow.svg)
+![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
+
 </div>
 
 ## ✨ What is OctoBot?
@@ -40,9 +40,6 @@ pip install -r requirements.txt
 
 # Launch the application
 python src/app.py
-
-# Convert .ui files to .py
-python ui_to_py.py
 ```
 
 ### 🛠️ Development Commands
@@ -56,6 +53,9 @@ make compile-translations
 
 # Clean compiled translation files
 make clean
+
+# Convert .ui files to .py
+make convert
 ```
 
 ## 🌐 Language Support
@@ -97,3 +97,4 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 ⭐ Star us on GitHub if you find this project helpful!
 
 </div>
+
