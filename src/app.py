@@ -1,10 +1,4 @@
-import os
-import pandas as pd
-import numpy as np
-import sys
-import webbrowser
-import time
-import urllib.parse
+import os, pandas as pd, sys, time, urllib.parse, requests
 from datetime import datetime
 
 from selenium import webdriver
@@ -14,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog
-from PyQt6.QtCore import QThread, pyqtSignal, QTranslator, QLocale, QCoreApplication
+from PyQt6.QtCore import QThread, pyqtSignal, QTranslator, QLocale, QCoreApplication, QTimer
 
 from db_connect import *
 from info import *
@@ -173,6 +167,7 @@ class Main(QMainWindow, Ui_Main):
         self.setup_interface()
         self.setup_window()
         self.setup_buttons()
+        QTimer.singleShot(500, self.check_version)
         
         self.worker = None
 
@@ -517,42 +512,41 @@ class Main(QMainWindow, Ui_Main):
     ######## About ###########################
     def about(self):
         about_info = f"""
-        \tOctoBot\n
-        Version: {app_version}
-        Python: 3.13.7 
-        PyQt6: 6.9.1
-        OS: Linux x64, Windows (10, 11) x64\n
-        {legal_copyright}
-
-        <p><a href='http://www.google.com'>www.google.com</a></p>
-        """
-
-        QMessageBox.information(self, self.title, about_info)
-
-    def about(self):
-        about_info = f"""
         <p>App: {app_name}</p>
         <p>Version: {app_version}</p>
         <p>Tools: Python, PyQt6, Selenium</p>
         <p>OS: Linux x64, Windows (10, 11) x64</p>
-        <p>{legal_copyright}</p>
-        <hr>
-        <p>The best part is free and open source :)</p>
+        <p>Alasgarovs. {legal_copyright}</p>
+        
         <p><a href='https://github.com/alasgarovs/OctoBot.git' style="color:#2F64B5;">https://github.com/alasgarovs/OctoBot.git</a></p>
         """
-
+        
         QMessageBox.information(self, self.title, about_info)
 
-    def new_version_info(self):
-        # coming soon
-        pass
+    def check_version(self):
+        try:
+            local_version = app_version
+            
+            url = "https://raw.githubusercontent.com/alasgarovs/OctoBot/main/VERSION"
+            response = requests.get(url, timeout=5)
+            github_version = response.text.strip()
+            
+            if github_version != local_version:
+
+                version_info = f"""
+                <p>New version {github_version} available! Current: {local_version}</p>
+                
+                <p>Download new version :<a href='https://github.com/alasgarovs/OctoBot.git' style="color:#2F64B5;">https://github.com/alasgarovs/OctoBot.git</a></p>
+                """ 
+                QMessageBox.information(self, self.title, version_info)
+            else:
+                pass
+                 
+        except Exception as e:
+            pass
 
     def update(self):
         # coming soon
-        pass
-
-    def license_key(self):
-        #free
         pass
 
     ############## QUIT ##################################
