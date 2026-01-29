@@ -16,7 +16,6 @@ class Pool(Base):
     updated_date = Column(DateTime, default=lambda: datetime.now(pytz.timezone('Asia/Baku')), 
                                 onupdate=lambda: datetime.now(pytz.timezone('Asia/Baku')))
 
-
 class TempNumbers(Base):
     __tablename__ = 'TempNumbers'
     
@@ -29,16 +28,6 @@ class Message(Base):
     
     id = Column(Integer, primary_key=True)
     message = Column(String(10000), nullable=False)
-
-
-class License(Base):
-    __tablename__ = 'License'
-
-    id = Column(Integer, primary_key=True)
-    app_license = Column(String(100), default='no_license_key')
-    created_date = Column(DateTime, default=lambda: datetime.now(pytz.timezone('Asia/Baku')))
-    updated_date = Column(DateTime, default=lambda: datetime.now(pytz.timezone('Asia/Baku')), 
-                                onupdate=lambda: datetime.now(pytz.timezone('Asia/Baku')))
 
 
 # Create a SQLite database
