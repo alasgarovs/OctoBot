@@ -15,11 +15,11 @@ from info import *
 from ui_pycode.main import Ui_Main
 
 statuses = {
-    "success": ['✔️ - ', '#00d4ff'],
-    "activate": ['✔️ - ', "#00FF00"],
-    "error": ['❌ - ', "#FF0015"],
-    "info": ['ℹ️ - ', '#D8D9DB'],
-    "critical": ['⚠️ - ', "#FFBB00"]
+    "success": ['✔️', '#00d4ff'],
+    "activate": ['✔️', "#00FF00"],
+    "error": ['❌', "#FF0015"],
+    "info": ['ℹ️', '#D8D9DB'],
+    "critical": ['⚠️', "#FFBB00"]
 }
 
 class WhatsAppWorker(QThread):
