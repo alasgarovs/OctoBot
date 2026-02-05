@@ -1,5 +1,5 @@
 app_name = 'OctoBot'
-app_version= '1.0.0'
+app_version= '1.0.0.0'
 original_filename = 'OctoBot.exe'
 file_description = 'WhatsApp Messaging Bot'
 company_name = ''
