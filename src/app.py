@@ -43,6 +43,17 @@ class WhatsAppWorker(QThread):
         self.is_running = False
     
     def run(self):
+        with Session() as session:
+            temp_numbers = session.query(TempNumbers).all()
+            
+        if not temp_numbers:
+            self.log_signal.emit(
+                QCoreApplication.translate("WhatsAppWorker", "Error: The DB is empty, import numbers to the database."),
+                self.error
+            )
+            self.operation_finished.emit()
+            return
+
         chrome_options = Options()
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
@@ -51,19 +62,7 @@ class WhatsAppWorker(QThread):
         driver = webdriver.Chrome(options=chrome_options)
         logged_in = False
         
-        try:
-            with Session() as session:
-                temp_numbers = session.query(TempNumbers).all()
-            
-            if not temp_numbers:
-                self.log_signal.emit(
-                    QCoreApplication.translate("WhatsAppWorker", "Error: The DB is empty, import numbers to the database."),
-                    self.error
-                )
-                driver.quit()
-                self.operation_finished.emit()
-                return
-            
+        try:            
             for num in temp_numbers:
                 if not self.is_running:
                     break
