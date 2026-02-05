@@ -109,8 +109,8 @@ class WhatsAppWorker(QThread):
                             break
                         
                         time.sleep(2)
-                        error_message = driver.find_elements(By.XPATH, '//div[contains(text(), "Phone number shared via url is invalid.")]')
-                        
+                        error_message = driver.find_elements(By.XPATH, f"""//div[contains(text(), "isn't on WhatsApp.")]""")                        
+
                         if error_message:
                             self.log_signal.emit(
                                 QCoreApplication.translate("WhatsAppWorker", "Phone number +{0} shared via url is invalid.").format(num.number),
