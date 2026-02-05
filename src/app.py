@@ -1,5 +1,6 @@
 import os, pandas as pd, sys, time, urllib.parse, requests
 from datetime import datetime
+from pathlib import Path
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -445,7 +446,10 @@ class Main(QMainWindow, Ui_Main):
         # Create new translator
         self.translator = QTranslator()
         
-        if self.translator.load(f"src/translations/app_{language}.qm"):
+        # Get absolute path to translations directory
+        translation_path = Path(__file__).parent / "translations" / f"app_{language}.qm"
+        
+        if self.translator.load(str(translation_path)):
             QApplication.instance().installTranslator(self.translator)
             self.retranslate_ui()
             self.log(self.tr("Language changed to {0}").format(language.upper()), self.success)
