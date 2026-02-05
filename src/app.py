@@ -14,6 +14,14 @@ from db_connect import *
 from info import *
 from ui_pycode.main import Ui_Main
 
+statuses = {
+    "success": ['✔️ - ', '#00d4ff'],
+    "activate": ['✔️ - ', "#00FF00"],
+    "error": ['❌ - ', "#FF0015"],
+    "info": ['ℹ️ - ', '#D8D9DB'],
+    "critical": ['⚠️ - ', "#FFBB00"]
+}
+
 class WhatsAppWorker(QThread):
     log_signal = pyqtSignal(str, list)
     update_temp_count = pyqtSignal()
@@ -25,11 +33,11 @@ class WhatsAppWorker(QThread):
         self.message = message
         self.is_running = True
 
-        self.success = ['\uf058', '#00d4ff']
-        self.activate = ['\uf058', "#00FF00"]
-        self.error = ['\uf057', "#FF0015"]
-        self.info = ['\uf05a', '#D8D9DB']
-        self.critical = ['\uf06a', "#FFBB00"]
+        self.success = statuses['success']
+        self.activate = statuses['activate']
+        self.error = statuses['error']
+        self.info = statuses['info']
+        self.critical = statuses['critical']
     
     def stop(self):
         self.is_running = False
@@ -158,11 +166,11 @@ class Main(QMainWindow, Ui_Main):
         self.setupUi(self)
 
         self.title = 'OctoBot'
-        self.success = ['\uf058', '#00d4ff']
-        self.activate = ['\uf058', "#00FF00"]
-        self.error = ['\uf057', "#FF0015"]
-        self.info = ['\uf05a', '#D8D9DB']
-        self.critical = ['\uf06a', "#FFBB00"]
+        self.success = statuses['success']
+        self.activate = statuses['activate']
+        self.error = statuses['error']
+        self.info = statuses['info']
+        self.critical = statuses['critical']
         
         self.setup_interface()
         self.setup_window()
