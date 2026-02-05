@@ -15,15 +15,15 @@ from info import *
 from ui_pycode.main import Ui_Main
 
 statuses = {
-    "success": ['✔️', '#00d4ff'],
-    "activate": ['✔️', "#00FF00"],
-    "error": ['❌', "#FF0015"],
-    "info": ['ℹ️', '#D8D9DB'],
-    "critical": ['⚠️', "#FFBB00"]
+    "success":'#00d4ff',
+    "activate":"#00FF00",
+    "error":"#FF0015",
+    "info": '#D8D9DB',
+    "critical":"#FFBB00"
 }
 
 class WhatsAppWorker(QThread):
-    log_signal = pyqtSignal(str, list)
+    log_signal = pyqtSignal(str, str)
     update_temp_count = pyqtSignal()
     update_all_count = pyqtSignal()
     operation_finished = pyqtSignal()
@@ -348,7 +348,7 @@ class Main(QMainWindow, Ui_Main):
 
     def log(self, text, log_type):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        self.Log.append(f'<font color="{log_type[1]}">{log_type[0]} {timestamp} - {text}</font><br>')
+        self.Log.append(f'{timestamp} - <font color="{log_type}">{text}</font><br>')
         QApplication.processEvents()
 
     def fetch_temp_numbers_count(self):
