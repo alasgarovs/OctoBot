@@ -30,7 +30,7 @@ OctoBot is a **WhatsApp messaging automation tool** that streamlines your commun
 
 ### For End Users
 
-Pre-built packages coming soon! Stay tuned for one-click installation.
+The first pre-built package is now released! 🎉 You can find the release [here](https://github.com/alasgarovs/OctoBot/releases).
 
 ### For Developers
 
