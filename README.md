@@ -12,7 +12,7 @@
 
 ## ✨ What is OctoBot?
 
-OctoBot is a **WhatsApp messaging automation tool** that streamlines your communication workflow. Built with Python, PyQt6, and Selenium. It seamlessly integrates with WhatsApp Web to send personalized messages to multiple contacts from your Excel spreadsheets.
+OctoBot is a **WhatsApp messaging automation tool** that streamlines your communication workflow. Built with Python, PyQt6 and Selenium. It seamlessly integrates with WhatsApp Web to send personalized messages to multiple contacts from your Excel spreadsheets.
 
 ### 🎯 Key Features
 
