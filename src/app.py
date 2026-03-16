@@ -93,52 +93,86 @@ class WhatsAppWorker(QThread):
                         encoded_message = urllib.parse.quote(self.message)
                         wa_link = f"https://web.whatsapp.com/send?phone=+{num.number}&text={encoded_message}"
                         driver.get(wa_link)
-                        
-                        if not self.is_running:
-                            break
-                        
-                        if not logged_in:
-                            wait = WebDriverWait(driver, 30)
-                            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"]')))
-                            logged_in = True
-                        else:
-                            wait = WebDriverWait(driver, 15)
-                            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"]')))
-                        
-                        if not self.is_running:
-                            break
-                        
-                        time.sleep(2)
-                        error_message = driver.find_elements(By.XPATH, f"""//div[contains(text(), "isn't on WhatsApp.")]""")                        
 
-                        if error_message:
+                        if not self.is_running:
+                            break
+
+                        wait_time = 30 if not logged_in else 15
+                        wait = WebDriverWait(driver, wait_time)
+
+                        chat_loaded = False
+                        invalid_number = False
+
+                        start = time.time()
+                        while time.time() - start < 15:
+
+                            if not self.is_running:
+                                break
+
+                            chat_box = driver.find_elements(By.XPATH, '//footer//div[@contenteditable="true"]')
+                            if chat_box:
+                                chat_loaded = True
+                                break
+
+                            dialog = driver.find_elements(By.XPATH, '//div[@role="dialog"]')
+                            if dialog:
+                                invalid_number = True
+                                break
+
+                            time.sleep(1)
+
+                        if invalid_number:
+                            try:
+                                ok_button = driver.find_element(By.XPATH, '//div[@role="dialog"]//div[@role="button"]')
+                                ok_button.click()
+                            except:
+                                pass
+
                             self.log_signal.emit(
-                                QCoreApplication.translate("WhatsAppWorker", "Phone number +{0} shared via url is invalid.").format(num.number),
+                                QCoreApplication.translate(
+                                    "WhatsAppWorker", 
+                                    "Phone number +{0} shared via url is invalid."
+                                    ).format(num.number),
                                 self.error
                             )
+
                             continue
-                        
+
+                        if not chat_loaded:
+                            raise Exception("Chat did not load")
+
+                        logged_in = True
+
                         if not self.is_running:
                             break
-                        
+
+                        time.sleep(2)
                         send_button = WebDriverWait(driver, 10).until(
                             EC.element_to_be_clickable((By.XPATH, '//span[@data-icon="wds-ic-send-filled"]'))
                         )
+
                         send_button.click()
+
                         time.sleep(3)
-                        
                         self.log_signal.emit(
-                            QCoreApplication.translate("WhatsAppWorker", "Message to +{0} sent successfully.").format(num.number),
+                            QCoreApplication.translate(
+                                "WhatsAppWorker",
+                                "Message to +{0} sent successfully."
+                            ).format(num.number),
                             self.success
                         )
+
                         session.add(Pool(number=num.number, whatsapp_status=True))
-                        
+
                     except Exception as e:
                         self.log_signal.emit(
-                            QCoreApplication.translate("WhatsAppWorker", "Failed to send message to +{0}: {1}.").format(num.number, e),
+                            QCoreApplication.translate(
+                                "WhatsAppWorker",
+                                "Failed to send message to +{0}: {1}."
+                            ).format(num.number, e),
                             self.error
                         )
-                    
+
                     session.commit()
                 
                 self.update_temp_count.emit()
