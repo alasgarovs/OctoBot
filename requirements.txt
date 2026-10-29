@@ -1,6 +1,4 @@
 selenium
-requests
-pywhatkit
 pandas
 sqlalchemy
 PyQt6
