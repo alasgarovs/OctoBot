@@ -1,8 +1,8 @@
-selenium
 pandas
 sqlalchemy
 PyQt6
-PySide6
 openpyxl
 xlrd==2.0.2
-pytz
+neonize
+qrcode[pil]
+platformdirs
