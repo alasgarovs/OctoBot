@@ -1,17 +1,22 @@
-# Update .ts files from source code
+# OctoBot developer tasks. Run from the repository root.
+VENV ?= .venv
+
+# Update .ts files from the source code (drops obsolete strings).
 update-translations:
-	for ts in src/translations/app_*.ts; do \
-		pylupdate6 src/app.py --ts "$$ts"; \
+	for lang in en az ru; do \
+		$(VENV)/bin/pylupdate6 src/app.py src/pages.py src/workers.py src/widgets.py \
+			--no-obsolete --ts src/translations/app_$$lang.ts; \
 	done
 
-# Compile .ts → .qm
+# Compile .ts -> .qm. (en mirrors the source text; fill az/ru in the .ts files first.)
 compile-translations:
-	lrelease src/translations/*.ts
+	for lang in en az ru; do \
+		$(VENV)/bin/pyside6-lrelease src/translations/app_$$lang.ts \
+			-qm src/translations/app_$$lang.qm; \
+	done
 
-# Clean compiled .qm files
-clean:
-	rm -f src/translations/*.qm
+# Regenerate icons/favicon.ico from the in-app logo.
+favicon:
+	$(VENV)/bin/python tools/make_favicon.py
 
-# Convert .ui files to .py
-convert:
-	python ui_to_py.py
+.PHONY: update-translations compile-translations favicon

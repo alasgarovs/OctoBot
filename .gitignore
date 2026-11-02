@@ -1,6 +1,7 @@
 *.db
 *.bak
 *.sqlite3
+*.spec
 .xlsx
 .idea/
 lab/

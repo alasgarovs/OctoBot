@@ -1,6 +1,6 @@
 app_name = 'OctoBot'
-app_version= '1.0.0.1'
+app_version= '2.0.0.0'
 original_filename = 'OctoBot.exe'
 file_description = 'WhatsApp Messaging Bot'
-company_name = ''
+company_name = 'Alasgarovs'
 legal_copyright = 'All Rights Reserved © 2026.'
