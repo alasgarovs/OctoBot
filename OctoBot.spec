@@ -20,13 +20,15 @@ import sys
 
 from PyInstaller.utils.hooks import collect_all
 
-SPECDIR = os.path.dirname(os.path.abspath(__file__))
+# NOTE: spec files are exec'd without __file__; PyInstaller-provided SPECPATH
+# holds the spec's directory instead.
+SPECDIR = SPECPATH
 sys.path.insert(0, SPECDIR)
 gen_metadata = runpy.run_path(os.path.join(SPECDIR, "generateMetadata.py"))
 METADATA_FILE = os.path.join(SPECDIR, "metadata.txt")
 gen_metadata["generate_md"](METADATA_FILE)
 
-info = runpy.run_path("src/info.py")
+info = runpy.run_path(os.path.join(SPECDIR, "src", "info.py"))
 APP_NAME = info["app_name"]
 
 neonize_datas, neonize_binaries, neonize_hiddenimports = collect_all("neonize")
