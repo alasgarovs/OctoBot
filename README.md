@@ -1,6 +1,7 @@
 # OctoBot - WhatsApp Automation Made Easy
 
 <div align="center">
+  <img src="icons/favicon.ico" alt="OctoBot Logo" width="200"/>
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![PyQt6](https://img.shields.io/badge/PyQt6-GUI-green.svg)
@@ -24,10 +25,6 @@ OctoBot is a **WhatsApp messaging automation tool** with a clean, modern desktop
 * 🎨 **Modern GUI** - Clean, intuitive interface built with PyQt6
 * 🌍 **Multi-language Support** - Available in English, Russian, and Azerbaijani
 
-## 📸 Preview
-
-<div align="center">   <img width="600" height="400" alt="OctoBot Interface" src="https://github.com/user-attachments/assets/8871f01c-2e00-4418-ba37-c6756fbb133b" /> </div>
-
 ## 🚀 Getting Started
 
 ### For End Users
@@ -42,21 +39,10 @@ git clone https://github.com/alasgarovs/OctoBot.git
 cd OctoBot
 
 # Create a virtual environment and install dependencies
-python -m venv .venv
-.venv/bin/pip install -r requirements.txt    # Windows: .venv\Scripts\pip
+pip install -r requirements.txt
 
 # Launch the application
-.venv/bin/python src/app.py                  # Windows: .venv\Scripts\python
-```
-
-## 📦 Building the Executable
-
-The executable must be built **on Windows** (PyInstaller cannot cross-compile):
-
-```console
-pip install -r requirements.txt
-pyinstaller --noconfirm --clean --upx-dir="C:\Tools\upx-5.3.0-win64" OctoBot.spec
-# -> dist\OctoBot\OctoBot.exe   (onedir build)
+python src/app.py
 ```
 
 ## 🛠️ Development Commands
