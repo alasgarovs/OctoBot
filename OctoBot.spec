@@ -1,5 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-"""PyInstaller build recipe for the Windows executable.
+r"""PyInstaller build recipe for the Windows executable.
 
 Build on Windows with the venv active:
     pip install pyinstaller
