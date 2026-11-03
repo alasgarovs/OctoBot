@@ -1,7 +1,6 @@
 *.db
 *.bak
 *.sqlite3
-*.spec
 .xlsx
 .idea/
 lab/
@@ -9,3 +8,5 @@ __pycache__/
 todo.md
 metadata.txt
 output/
+build/
+dist/

@@ -6,3 +6,4 @@ xlrd==2.0.2
 neonize
 qrcode[pil]
 platformdirs
+pyinstaller
