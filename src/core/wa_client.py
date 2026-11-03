@@ -8,6 +8,7 @@ Callbacks (called from library threads - never touch UI objects in them):
                               logged_out | paired | error | phone
 """
 
+import gc
 import sqlite3
 import threading
 import time
@@ -126,16 +127,31 @@ class WhatsAppClient:
         if phone:
             self._status("phone", phone)
 
+    def _release(self, client):
+        """Fully stop a neonize client and force the Go runtime to release
+        its resources.
+
+        The Go-side store (which holds the open SQLite session file) is only
+        freed when the Python wrapper object is garbage-collected
+        (neonize releases it via weakref.finalize). Deliberately dropping the
+        reference before deleting the session files makes delete_session()
+        actually succeed instead of failing on a locked file.
+        """
+        for method in ("stop", "disconnect"):
+            try:
+                getattr(client, method)()
+            except Exception:
+                pass
+        del client
+        gc.collect()
+
     def stop(self):
         """Disconnect but keep the saved login."""
         with self._lock:
             client, self._client = self._client, None
         self._connected.clear()
         if client is not None:
-            try:
-                client.disconnect()
-            except Exception:
-                pass
+            self._release(client)
 
     def logout(self):
         """Unlink this device and wipe the saved login from disk."""
@@ -148,11 +164,8 @@ class WhatsAppClient:
                 client.logout()
             except Exception:
                 pass
-            try:
-                client.disconnect()
-            except Exception:
-                pass
-            time.sleep(1.0)  # give the runtime time to release the store
+            self._release(client)
+        time.sleep(0.5)  # give the runtime a beat to settle before wiping
         wiped = delete_session()
         self._logout_in_progress = False
         return wiped
@@ -163,11 +176,8 @@ class WhatsAppClient:
             client, self._client = self._client, None
         self._connected.clear()
         if client is not None:
-            try:
-                client.disconnect()
-            except Exception:
-                pass
-            time.sleep(1.0)  # give the runtime time to release the store
+            self._release(client)
+            time.sleep(0.5)  # give the runtime a beat to settle before wiping
         wiped = delete_session()
         self._status("logged_out", "wiped" if wiped else "left")
 
