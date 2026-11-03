@@ -616,7 +616,7 @@ if __name__ == "__main__":
         app.installTranslator(translator)
 
     main_window = Main()
-    main_window.show()
+    main_window.showMaximized()
     exit_code = app.exec()
     if sys.stdout is not None:
         sys.stdout.flush()
