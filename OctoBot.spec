@@ -3,7 +3,7 @@
 
 Build on Windows with the venv active:
     pip install pyinstaller
-    pyinstaller --noconfirm OctoBot.spec
+    pyinstaller --noconfirm --clean --upx-dir="C:\Tools\upx-5.3.0-win64" OctoBot.spec
     # -> dist/OctoBot/OctoBot.exe  (onedir; keeps antivirus calm)
 
 Windows version info (Properties > Details) is regenerated into
@@ -20,8 +20,6 @@ import sys
 
 from PyInstaller.utils.hooks import collect_all
 
-# NOTE: spec files are exec'd without __file__; PyInstaller-provided SPECPATH
-# holds the spec's directory instead.
 SPECDIR = SPECPATH
 sys.path.insert(0, SPECDIR)
 gen_metadata = runpy.run_path(os.path.join(SPECDIR, "generateMetadata.py"))
