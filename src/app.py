@@ -618,6 +618,8 @@ if __name__ == "__main__":
     main_window = Main()
     main_window.show()
     exit_code = app.exec()
-    sys.stdout.flush()
-    sys.stderr.flush()
+    if sys.stdout is not None:
+        sys.stdout.flush()
+    if sys.stderr is not None:
+        sys.stderr.flush()
     os._exit(exit_code)
