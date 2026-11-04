@@ -74,7 +74,7 @@ class VersionChecker(QObject):
             return
         if reply.error() == QNetworkReply.NetworkError.NoError:
             body = bytes(reply.readAll()).decode("utf-8", errors="replace").strip()
-            if body and body != app_version:
+            if body and app_version and body != app_version:
                 self.update_available.emit(body, app_version)
         reply.deleteLater()
 
