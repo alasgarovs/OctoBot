@@ -38,6 +38,7 @@ a = Analysis(
     datas=[
         ("src/translations", "translations"),
         ("icons", "icons"),
+        ("VERSION", "."), 
     ] + neonize_datas,
     hiddenimports=neonize_hiddenimports,
     hookspath=[],
