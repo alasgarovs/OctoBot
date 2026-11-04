@@ -574,7 +574,7 @@ class Main(QMainWindow):
         version_info = f"""
         <p>New version {github_version} available! Current: {local_version}</p>
 
-        <p>Download new version :<a href='https://github.com/alasgarovs/OctoBot.git' style="color:#2F64B5;">https://github.com/alasgarovs/OctoBot.git</a></p>
+        <p>Download new version :<a href='https://github.com/alasgarovs/OctoBot/releases' style="color:#2F64B5;">https://github.com/alasgarovs/OctoBot/releases</a></p>
         """
         QMessageBox.information(self, self.title, version_info)
 
